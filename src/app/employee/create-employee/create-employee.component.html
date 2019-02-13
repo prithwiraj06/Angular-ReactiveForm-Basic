@@ -1,0 +1,120 @@
+<form class="form-horizontal" [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h4 class="panel-title">Create Employee</h4>
+  </div>
+  <div class="panel-body">
+    <div class="form-group" [ngClass]="{'has-error' : formErrors.employeeName}">
+      <label class="col-md-2 control-label">Employee Name</label>
+      <div class="col-md-10">
+        <input type="text" class="form-control" id="employeeName" formControlName="employeeName" placeholder="Employee Name"
+        (blur)="logValidationErrorMessages()">
+        <span class="help-block" *ngIf="formErrors.employeeName">{{formErrors.employeeName}}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Contact Prefrence</label>
+      <div class="col-md-10">
+        <label class="radio-inline">
+          <input type="radio" formControlName="contactPrefrence" value="email">Email
+        </label>
+        <label class="radio-inline">
+          <input type="radio"  formControlName="contactPrefrence" value="phone">Phone
+        </label>
+      </div>
+    </div>
+
+    <div formGroupName="emailGroup">
+
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.email}">
+        <label class="col-md-2 control-label">Email</label>
+        <div class="col-md-10">
+          <input type="text" class="form-control" id="employeeEmail" formControlName="email" placeholder="Email"
+          (blur)="logValidationErrorMessages()">
+          <span class="help-block" *ngIf="formErrors.email">{{formErrors.email}}</span>
+        </div>
+      </div>
+  
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.confirmEmail || formErrors.emailGroup}">
+        <label class="col-md-2 control-label">Confirm Email</label>
+        <div class="col-md-10">
+          <input type="text" class="form-control" id="confirmEmail" formControlName="confirmEmail" placeholder="Confirm Email"
+          (blur)="logValidationErrorMessages()">
+          <span class="help-block" *ngIf="formErrors.confirmEmail || formErrors.emailGroup">
+            {{formErrors.confirmEmail ? formErrors.confirmEmail : formErrors.emailGroup}}
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-error' : formErrors.phone}">
+      <label class="col-md-2 control-label">Phone</label>
+      <div class="col-md-10">
+        <input type="text" class="form-control" id="employeephone" formControlName="phone" placeholder="phone"
+        (blur)="logValidationErrorMessages()">
+        <span class="help-block" *ngIf="formErrors.phone">{{formErrors.phone}}</span>
+      </div>
+    </div>
+
+    <div formGroupName="skills">
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.skillName}">
+        <label class="col-md-2 control-label">Skills</label>
+        <div class="col-md-5">
+          <input type="text" id="skillName" class="form-control" formControlName="skillName" placeholder="Skill Name"
+          (blur)="logValidationErrorMessages()">
+          <span class="help-block" *ngIf="formErrors.skillName">{{formErrors.skillName}}</span>        
+        </div>
+        <div class="col-md-5" [ngClass]="{'has-error' : formErrors.experienceInYears}">
+          <input type="text" class="form-control" formControlName="experienceInYears" placeholder="Experience in years"
+          (blur)="logValidationErrorMessages()">
+          <span class="help-block" *ngIf="formErrors.experienceInYears">{{formErrors.experienceInYears}}</span>                
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.proficiency}">
+        <label class="col-md-2 control-label">Proficiency</label>
+        <div class="col-md-10">
+          <label class="radio-inline">
+            <input type="radio" id="proficiecny" formControlName="proficiency" value="beginner" (blur)="logValidationErrorMessages()">Beginner
+          </label>
+          <label class="radio-inline">
+            <input type="radio" id="proficiecny" formControlName="proficiency" value="intermediate" (blur)="logValidationErrorMessages()">Intermediate
+          </label>
+          <label class="radio-inline">
+            <input type="radio" id="proficiecny" formControlName="proficiency" value="advance" (blur)="logValidationErrorMessages()">Advance
+          </label>
+          <span class="help-block" *ngIf="formErrors.proficiency">{{formErrors.proficiency}}</span>
+        </div>
+      </div>
+    </div>    
+  </div>
+  <div class="panel-footer">
+    <div class="btn-toolbar">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-primary" (click)="loadData()">Load Data</button>
+    </div>
+  </div>
+</div>
+</form>
+{{employeeForm.value | json}}
+<table border="1">
+  <tr>
+    <th style="padding:10px">Form Group</th>
+    <th style="padding:10px">Form Control</th>
+  </tr>
+  <tr>
+    <td style="padding:10px">
+      touched: {{employeeForm.touched}}<br>
+      dirty: {{employeeForm.dirty}}<br>
+      valid: {{employeeForm.valid}}<br>
+      form group: {{employeeForm.value | json}}
+    </td>
+    <td style="padding:10px">
+      touched: {{employeeForm.get('employeeName').touched}}<br>
+      dirty: {{employeeForm.get('employeeName').dirty}}<br>
+      valid: {{employeeForm.get('employeeName').valid}}<br>
+      form control: {{employeeForm.get('employeeName').value | json}}
+    </td>
+  </tr>
+</table>
